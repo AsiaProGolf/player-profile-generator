@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sarit Suwannarut — Player Profile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --paper: #ffffff; --ink: #25477A; --ink2: #33649E; --accent: #7AC8FF;
+  --accent-strong: #33649E; --text: #1F1F1F; --muted: #6B7280;
+  --tan: #A17C5A; --line: #E5E9F0; --tint: #EEF5FC;
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 28px 16px; background: #F3F5F8; color: var(--text);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+.card { max-width: 720px; margin: 0 auto; background: var(--paper);
+  border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
+  box-shadow: 0 1px 2px rgba(16,36,58,.04), 0 8px 28px rgba(16,36,58,.07); }
+.accentbar { height: 6px; background: linear-gradient(90deg, var(--accent-strong), var(--accent)); }
+.head { display: flex; gap: 18px; align-items: center; padding: 22px 26px 6px; }
+.photo { width: 92px; height: 92px; border-radius: 50%; object-fit: cover;
+  border: 3px solid var(--paper); box-shadow: 0 0 0 2px var(--accent); flex: 0 0 auto; }
+.photo.placeholder { display: flex; align-items: center; justify-content: center;
+  background: var(--tint); color: var(--ink2); font-weight: 800; font-size: 30px; letter-spacing: .5px; }
+.who h1 { margin: 0; font-size: 27px; line-height: 1.15; color: var(--ink); font-weight: 800; letter-spacing: -.01em; }
+.who .aka { font-size: 18px; font-weight: 600; color: var(--accent-strong); white-space: nowrap; }
+.subline { margin-top: 4px; color: var(--muted); font-size: 14.5px; }
+.subline .nat { font-weight: 600; color: var(--text); }
+.badges { margin-top: 9px; display: flex; flex-wrap: wrap; gap: 7px; }
+.badge { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
+  padding: 3px 9px; border-radius: 999px; }
+.badge-pro { background: var(--tint); color: var(--ink2); }
+.badge-am { background: #FBF1E0; color: #9A6B12; }
+.conf { font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px; }
+.conf-confirmed-official { background: #E9F4EF; color: #227454; }
+.conf-confirmed-press { background: #E9F4EF; color: #227454; }
+.conf-notes-only { background: #FBF1E0; color: #9A6B12; }
+.conf-unconfirmed { background: #FAE9E7; color: #B23B33; }
+.block { padding: 16px 26px; border-top: 1px solid var(--line); }
+.block h2 { margin: 0 0 12px; font-size: 12.5px; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--ink2); font-weight: 700; }
+.ranks { display: grid; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); gap: 10px; }
+.rank { background: var(--tint); border: 1px solid var(--line); border-radius: 12px; padding: 11px 12px; }
+.rank-label { font-size: 11.5px; font-weight: 800; color: var(--ink2); text-transform: uppercase; letter-spacing: .04em; }
+.rank-value { font-size: 26px; font-weight: 800; color: var(--ink); line-height: 1.1; margin: 2px 0; }
+.rank-meta { font-size: 11px; color: var(--muted); min-height: 14px; }
+.rank-asof { font-size: 11px; color: var(--muted); margin-top: 5px; font-style: italic; }
+.note { font-size: 12px; color: var(--muted); margin: 11px 0 0; }
+dl.bio { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 22px; }
+.bio-row dt { font-size: 11.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 700; }
+.bio-row dd { margin: 1px 0 0; font-size: 15px; color: var(--text); font-weight: 500; }
+ul.wins { list-style: none; margin: 0; padding: 0; }
+ul.wins li { padding: 6px 0; border-bottom: 1px dashed var(--line); font-size: 14.5px; }
+ul.wins li:last-child { border-bottom: 0; }
+ul.wins .yr { display: inline-block; min-width: 44px; font-weight: 800; color: var(--accent-strong); }
+ul.wins .wtitle { font-weight: 600; color: var(--text); }
+ul.wins .wtail { color: var(--muted); font-size: 13px; }
+.winsline { margin: 0 0 8px; font-size: 14px; color: var(--text); }
+.form { margin: 0; font-size: 14.5px; color: var(--text); }
+.event { margin-top: 12px; background: var(--tint); border-left: 4px solid var(--accent-strong);
+  border-radius: 0 10px 10px 0; padding: 11px 14px; }
+.event-name { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--ink2); }
+.event-sum { margin-top: 3px; font-size: 14.5px; color: var(--text); }
+ul.facts { list-style: none; margin: 0; padding: 0; }
+ul.facts li { position: relative; padding: 5px 0 5px 22px; font-size: 14.5px; }
+ul.facts li:before { content: "\26F3"; position: absolute; left: 0; color: var(--accent-strong); }
+.prov { padding: 14px 26px 20px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); background: #FBFCFD; }
+@media (max-width: 480px) {
+  .head { flex-direction: column; text-align: center; }
+  dl.bio { grid-template-columns: 1fr; }
+}
+
+</style>
+</head>
+<body>
+<article class="card"><div class="accentbar"></div><header class="head"><div class="photo placeholder">SS</div><div class="who"><h1>Sarit Suwannarut <span class="aka">“Safe”</span></h1><div class="subline"><span class="nat">🇹🇭 Thailand</span></div><div class="badges"><span class="badge badge-pro">Pro</span><span class="conf conf-confirmed-press">Confirmed (press)</span></div></div></header><section class="block"><h2>Rankings</h2><div class="ranks"><div class="rank"><div class="rank-label" title="Official World Golf Ranking">OWGR</div><div class="rank-value">484</div><div class="rank-meta">Official World Golf Ranking</div><div class="rank-asof">as of 22 Jun 2026</div></div></div><p class="note">Each ranking is dated independently — OWGR, tour Order of Merit, and WAGR measure different populations and are never combined.</p></section><section class="block"><h2>Bio</h2><dl class="bio"><div class="bio-row"><dt>Born</dt><dd>8 Jan 1998 (age 28)</dd></div><div class="bio-row"><dt>Turned pro</dt><dd>2018</dd></div><div class="bio-row"><dt>College</dt><dd>Virginia Tech</dd></div><div class="bio-row"><dt>Hometown</dt><dd>Nonthaburi, Thailand</dd></div><div class="bio-row"><dt>Plays</dt><dd>Asian Tour, All Thailand Golf Tour</dd></div></dl></section><section class="block"><h2>Career</h2><p class="winsline"><strong>5</strong> career professional wins.</p><ul class="wins"><li><span class="yr">2022</span><span class="wtitle">BNI Indonesian Masters</span> <span class="wtail">(Asian Tour)</span></li><li><span class="yr">2023</span><span class="wtitle">Volvo China Open</span> <span class="wtail">(Asian Tour, won by 6 shots)</span></li></ul></section><section class="block"><h2>Recent form</h2><p class="form">Fourth at the 2025 SJM Macau Open; led Round 1 of the International Series Philippines (Oct 2025); ranked roughly 25th on the Asian Tour Order of Merit at that point.</p><div class="event"><div class="event-name">Bangkok Classic 2026 (Asian Development Tour)</div><div class="event-sum">Round 1: 62 (−10), bogey-free — eight birdies and an eagle on the 18th for a new Phoenix Gold course record and a two-shot lead.</div></div></section><section class="block"><h2>Fun facts</h2><ul class="facts"><li>Goes by the nickname “Safe.”</li><li>His opening 62 is the new course record at Phoenix Gold Golf Bangkok.</li><li>Says playing at home — and his mum’s cooking — keeps him relaxed.</li></ul></section><footer class="prov">Field status: Confirmed (press) — Philstar Round-1 recap, 25 Jun 2026. Rankings carry per-figure “as of” dates above; re-pull on event week.</footer></article>
+</body></html>

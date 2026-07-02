@@ -1,0 +1,83 @@
+<!--
+  player-profile-generator — HTML structure reference (annotated skeleton).
+
+  This is the MARKUP MAP, not a runtime template. The renderer
+  (render_profile.py) builds this same structure in Python and inlines the CSS;
+  use this file when hand-porting a profile into Astro / WordPress / a CMS, or
+  to see the section order at a glance. {{double-brace}} = a data slot.
+
+  Section order (top to bottom): accent bar → header → Rankings → Bio →
+  Career → Recent form → Fun facts → provenance footer. Omit any section whose
+  data is absent (the renderer does).
+-->
+<article class="card">
+  <div class="accentbar"></div>
+
+  <!-- HEADER: photo slot (or initials placeholder), name, nickname, nationality, status + field-confidence badges -->
+  <header class="head">
+    <img class="photo" src="{{photo_url}}" alt="{{full_name}}">     <!-- or <div class="photo placeholder">{{INITIALS}}</div> -->
+    <div class="who">
+      <h1>{{full_name}} <span class="aka">"{{also_known_as}}"</span></h1>
+      <div class="subline"><span class="nat">{{flag}} {{nationality_label}}</span></div>
+      <div class="badges">
+        <span class="badge badge-pro">Pro</span>            <!-- or .badge-am "Amateur" -->
+        <span class="conf conf-{{in_field_confidence}}">{{confidence_label}}</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- RANKINGS: one chip per ranking, EACH with its own "as of" date. Never merge OWGR / OoM / WAGR. -->
+  <section class="block">
+    <h2>Rankings</h2>
+    <div class="ranks">
+      <!-- repeat per ranking present: owgr (+best), adt_oom_pos, asian_tour_oom_pos, wagr_rank -->
+      <div class="rank">
+        <div class="rank-label">OWGR</div>
+        <div class="rank-value">{{owgr_rank}}</div>
+        <div class="rank-meta">Official World Golf Ranking · best {{owgr_best}}</div>
+        <div class="rank-asof">as of {{owgr_as_of}}</div>
+      </div>
+    </div>
+    <p class="note">Each ranking is dated independently — different populations, never combined.</p>
+  </section>
+
+  <!-- BIO: DOB/age, turned pro, college, hometown, plays -->
+  <section class="block">
+    <h2>Bio</h2>
+    <dl class="bio">
+      <div class="bio-row"><dt>Born</dt><dd>{{birth_date}} (age {{age}})</dd></div>
+      <div class="bio-row"><dt>Turned pro</dt><dd>{{turned_pro_year}}</dd></div>
+      <div class="bio-row"><dt>College</dt><dd>{{college}}</dd></div>
+      <div class="bio-row"><dt>Hometown</dt><dd>{{hometown}}</dd></div>
+      <div class="bio-row"><dt>Plays</dt><dd>{{plays_joined}}</dd></div>
+    </dl>
+  </section>
+
+  <!-- CAREER: pro-win count + notable wins (year — title (tour, note)) -->
+  <section class="block">
+    <h2>Career</h2>
+    <p class="winsline"><strong>{{pro_wins_count}}</strong> career professional wins.</p>
+    <ul class="wins">
+      <li><span class="yr">{{year}}</span><span class="wtitle">{{title}}</span> <span class="wtail">({{tour}}, {{note}})</span></li>
+    </ul>
+  </section>
+
+  <!-- RECENT FORM: this-season summary + a highlighted "this event" callout -->
+  <section class="block">
+    <h2>Recent form</h2>
+    <p class="form">{{recent_form}}</p>
+    <div class="event">
+      <div class="event-name">{{this_event.name}}</div>
+      <div class="event-sum">{{this_event.summary}}</div>
+    </div>
+  </section>
+
+  <!-- FUN FACTS -->
+  <section class="block">
+    <h2>Fun facts</h2>
+    <ul class="facts"><li>{{fun_fact}}</li></ul>
+  </section>
+
+  <!-- PROVENANCE: field-confidence + source + the as-of reminder -->
+  <footer class="prov">Field status: {{confidence_label}} — {{field_source}}. Rankings carry per-figure "as of" dates above; re-pull on event week.</footer>
+</article>

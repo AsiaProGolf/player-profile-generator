@@ -1,0 +1,44 @@
+{
+  "full_name": "Sarit Suwannarut",
+  "also_known_as": "Safe",
+  "nationality": "THA",
+  "status": "Pro",
+
+  "owgr_rank": 484,
+  "owgr_best": null,
+  "owgr_as_of": "2026-06-22",
+  "adt_oom_pos": null,
+  "adt_oom_as_of": null,
+  "asian_tour_oom_pos": null,
+  "asian_tour_oom_as_of": null,
+  "wagr_rank": null,
+  "wagr_as_of": null,
+
+  "birth_date": "1998-01-08",
+  "birth_year": 1998,
+  "age": 28,
+  "turned_pro_year": 2018,
+  "hometown": "Nonthaburi, Thailand",
+  "college": "Virginia Tech",
+  "plays": ["Asian Tour", "All Thailand Golf Tour"],
+
+  "pro_wins_count": 5,
+  "notable_wins": [
+    { "title": "BNI Indonesian Masters", "tour": "Asian Tour", "year": 2022 },
+    { "title": "Volvo China Open", "tour": "Asian Tour", "year": 2023, "note": "won by 6 shots" }
+  ],
+  "recent_form": "Fourth at the 2025 SJM Macau Open; led Round 1 of the International Series Philippines (Oct 2025); ranked roughly 25th on the Asian Tour Order of Merit at that point.",
+  "this_event": {
+    "name": "Bangkok Classic 2026 (Asian Development Tour)",
+    "summary": "Round 1: 62 (−10), bogey-free — eight birdies and an eagle on the 18th for a new Phoenix Gold course record and a two-shot lead."
+  },
+  "fun_facts": [
+    "Goes by the nickname “Safe.”",
+    "His opening 62 is the new course record at Phoenix Gold Golf Bangkok.",
+    "Says playing at home — and his mum’s cooking — keeps him relaxed."
+  ],
+
+  "photo_url": null,
+  "in_field_confidence": "confirmed-press",
+  "field_source": "Philstar Round-1 recap, 25 Jun 2026"
+}
