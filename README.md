@@ -18,18 +18,19 @@ Given a JSON record for a player, the renderer outputs:
 Sections rendered (any section whose data is absent is omitted automatically):
 
 1. Header — photo or initials placeholder, name, nickname, nationality flag, Pro/Amateur badge, field-confidence badge.
-2. Rankings — one labeled chip per ranking (OWGR, ADT Order of Merit, Asian Tour Order of Merit, WAGR), each with its own "as of" date. Rankings are never conflated.
-3. Bio — born, turned pro, college, hometown, tours played.
-4. Career — win count and notable wins list.
-5. Recent form — this-season prose and a current-event callout.
-6. Fun facts — human-interest lines.
-7. Provenance footer — field-confidence status, source, and a reminder to re-pull rankings on event week.
+2. Season snapshot — optional statistics tiles.
+3. Rankings — one labeled chip per ranking (OWGR, ADT Order of Merit, Asian Tour Order of Merit, WAGR), each with its own "as of" date. Rankings are never conflated.
+4. Bio — born, turned pro, college, hometown, tours played.
+5. Career — win count and notable wins list.
+6. Recent form — this-season prose and a current-event callout.
+7. Fun facts — human-interest lines.
+8. Provenance footer — field-confidence status, source, and a reminder to re-pull rankings on event week.
 
 ---
 
 ## Requirements
 
-Python 3.8+. No third-party packages — standard library only (`argparse`, `html`, `json`, `os`, `re`, `datetime`).
+Python 3.8+. HTML, Markdown, and Astro generation use no third-party packages — standard library only (`argparse`, `html`, `json`, `os`, `re`, `datetime`).
 
 ---
 
@@ -47,8 +48,10 @@ python3 reference/render_profile.py --input PLAYER.json
 | `--out-dir` | `.` | Directory to write output files |
 | `--brand` | `36media` | Brand skin: `36media` or `tgh` |
 | `--format` | `both` | Output format: `html`, `md`, or `both` |
+| `--embed-fonts` | off | Embed vendored Inter fonts for offline HTML/PDF/PNG |
+| `--emit-astro PATH` | none | Generate the Astro component; no input record required |
 
-Output filenames are slugged from `full_name` (e.g. `sarit-suwannarut.html`). When `--input` is an array, one file is written per player.
+Output filenames are slugged from `full_name` (e.g. `sample-player.html`). When `--input` is an array, one file is written per player.
 
 ---
 
@@ -80,30 +83,30 @@ All fields are optional except `full_name`. The renderer omits any section whose
 
 | Field | Type | Notes |
 |---|---|---|
-| `hometown` | string | e.g. `"Nonthaburi, Thailand"` |
-| `college` | string | e.g. `"Virginia Tech"` |
+| `hometown` | string | e.g. `"Example City"` |
+| `college` | string | e.g. `"Example University"` |
 | `plays` | array of strings | Tours played, e.g. `["Asian Tour", "All Thailand Golf Tour"]` |
 | `pro_wins_count` | int | Total professional wins headline. |
 | `this_event` | `{ "name": ..., "summary": ... }` | A highlighted current-event callout under Recent form. |
 | `fun_facts` | array of strings | Human-interest lines. |
 | `photo_url` | string | Header photo URL; omit or set `null` for an initials placeholder. |
 
-See [`examples/sarit-suwannarut.json`](examples/sarit-suwannarut.json) for a complete record.
+See [`examples/sample-player.json`](examples/sample-player.json) for a complete synthetic record.
 
 ---
 
 ## Quick start
 
-Run the included example to regenerate the sample output:
+The included example contains synthetic data only. Run it to regenerate the sample output:
 
 ```bash
 python3 reference/render_profile.py \
-    --input examples/sarit-suwannarut.json \
+    --input examples/sample-player.json \
     --out-dir examples \
     --format both
 ```
 
-This writes `examples/sarit-suwannarut.html` and `examples/sarit-suwannarut.md`.
+This writes `examples/sample-player.html` and `examples/sample-player.md`.
 
 ---
 
@@ -114,12 +117,28 @@ reference/
   render_profile.py   — renderer: JSON → HTML + Markdown (no dependencies)
   template.html       — annotated HTML skeleton for hand-porting into a CMS or framework
 examples/
-  sarit-suwannarut.json   — complete sample input record
-  sarit-suwannarut.html   — rendered HTML output
-  sarit-suwannarut.md     — rendered Markdown output
+  sample-player.json   — complete sample input record
+  sample-player.html   — rendered HTML output
+  sample-player.md     — rendered Markdown output
 ```
 
 ---
+
+## Image export and Astro
+
+Render with `--embed-fonts`, then export a PNG with WeasyPrint, Poppler, and Pillow installed:
+
+```bash
+python3 reference/render_profile.py --input examples/sample-player.json --out-dir out --embed-fonts
+python3 reference/render_png.py out/sample-player.html --out out/sample-player.png
+python3 reference/render_profile.py --emit-astro web/PlayerProfile.astro
+```
+
+The generated Astro component shares the renderer's CSS and structure. See [web/README.md](web/README.md) for usage and [SKILL.md](SKILL.md) for the full input schema, tour accents, and licensed-photo requirements. Inter fonts are distributed under the [SIL Open Font License](reference/fonts/OFL.txt).
+
+## Tests
+
+With pytest installed, run `python3 -m pytest -q` from the repository root.
 
 ## Extending
 

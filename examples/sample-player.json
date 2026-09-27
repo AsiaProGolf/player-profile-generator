@@ -1,0 +1,73 @@
+{
+  "full_name": "Sample Player",
+  "also_known_as": "Demo",
+  "nationality": "THA",
+  "status": "Pro",
+  "owgr_rank": 250,
+  "owgr_best": 200,
+  "owgr_as_of": "2026-01-05",
+  "adt_oom_pos": 12,
+  "adt_oom_as_of": "2026-01-06",
+  "asian_tour_oom_pos": 40,
+  "asian_tour_oom_as_of": "2026-01-07",
+  "wagr_rank": null,
+  "wagr_as_of": null,
+  "birth_date": "2000-01-01",
+  "birth_year": 2000,
+  "age": 26,
+  "turned_pro_year": 2020,
+  "hometown": "Example City",
+  "college": "Example University",
+  "plays": [
+    "Asian Tour",
+    "All Thailand Golf Tour"
+  ],
+  "primary_tour": "Asian Tour",
+  "pro_wins_count": 2,
+  "notable_wins": [
+    {
+      "title": "Example Open",
+      "tour": "Asian Tour",
+      "year": 2024,
+      "note": "Synthetic result",
+      "signature": true
+    },
+    {
+      "title": "Sample Invitational",
+      "tour": "Example Tour",
+      "year": 2025
+    }
+  ],
+  "notable_results": [
+    {
+      "finish": "T2",
+      "title": "Demo Championship",
+      "tour": "Asian Tour",
+      "year": 2025
+    }
+  ],
+  "season_stats": [
+    {
+      "label": "Scoring average",
+      "value": "70.2",
+      "sub": "Synthetic season"
+    },
+    {
+      "label": "Top-10 finishes",
+      "value": "3"
+    }
+  ],
+  "recent_form": "Synthetic example: two top-10 finishes in three starts.",
+  "this_event": {
+    "name": "Example Championship 2026",
+    "summary": "Synthetic demonstration result.",
+    "result": "R1: 68 (-4) · T3"
+  },
+  "fun_facts": [
+    "This profile contains synthetic data for demonstration only."
+  ],
+  "photo_url": null,
+  "photo_credit": null,
+  "in_field_confidence": "notes-only",
+  "field_source": "Synthetic demonstration fixture; no real player data"
+}

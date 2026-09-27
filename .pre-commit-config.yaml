@@ -3,7 +3,7 @@
 #
 # All hooks gate on file types — a Python-only repo won't run JS hooks because
 # no JS files are staged, and vice versa. This is the single root config for
-# every Cowork coding repo.
+# all supported file types in this repository.
 
 default_install_hook_types: [pre-commit, commit-msg]
 fail_fast: false
