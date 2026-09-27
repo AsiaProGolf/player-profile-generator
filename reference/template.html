@@ -3,28 +3,46 @@
 
   This is the MARKUP MAP, not a runtime template. The renderer
   (render_profile.py) builds this same structure in Python and inlines the CSS;
-  use this file when hand-porting a profile into Astro / WordPress / a CMS, or
-  to see the section order at a glance. {{double-brace}} = a data slot.
+  the Astro port (web/PlayerProfile.astro, generated via `--emit-astro`) mirrors
+  it. render_profile.py's CARD_CSS is the single source of truth for the design.
+  Use this file to see the section order at a glance or to hand-port elsewhere.
+  {{double-brace}} = a data slot; omit any section whose data is absent.
 
-  Section order (top to bottom): accent bar → header → Rankings → Bio →
-  Career → Recent form → Fun facts → provenance footer. Omit any section whose
-  data is absent (the renderer does).
+  THEMING: a brand base (36media / tgh) sets font + navy ink + structure; when
+  the brand opts in (36media), the player's primary tour (primary_tour or
+  plays[0]) overlays the accent colour (--accent / --accent-strong / --tint) so
+  the accent bar, ranking chips, win badges and highlights carry the tour's hue.
+
+  Section order: accent bar → header → Season snapshot → Rankings → Bio →
+  Career → Recent form → Fun facts → provenance footer.
 -->
 <article class="card">
   <div class="accentbar"></div>
 
-  <!-- HEADER: photo slot (or initials placeholder), name, nickname, nationality, status + field-confidence badges -->
+  <!-- HEADER: photo (or intentional monogram tile), name, nickname, nationality, status/tour/confidence badges -->
   <header class="head">
-    <img class="photo" src="{{photo_url}}" alt="{{full_name}}">     <!-- or <div class="photo placeholder">{{INITIALS}}</div> -->
+    <div class="photo-wrap">
+      <img class="photo" src="{{photo_url}}" alt="{{full_name}}">   <!-- OR: <div class="photo photo-mono">{{INITIALS}}</div> -->
+      <span class="photo-credit">{{photo_credit}}</span>            <!-- optional caption; photo sourcing is an editorial input (licence) -->
+    </div>
     <div class="who">
       <h1>{{full_name}} <span class="aka">"{{also_known_as}}"</span></h1>
       <div class="subline"><span class="nat">{{flag}} {{nationality_label}}</span></div>
       <div class="badges">
-        <span class="badge badge-pro">Pro</span>            <!-- or .badge-am "Amateur" -->
+        <span class="badge badge-pro">Pro</span>                   <!-- or .badge-am "Amateur" -->
+        <span class="badge badge-tour">{{primary_tour}}</span>     <!-- featured tour; carries the accent colour -->
         <span class="conf conf-{{in_field_confidence}}">{{confidence_label}}</span>
       </div>
     </div>
   </header>
+
+  <!-- SEASON SNAPSHOT (optional): glance stats. season_stats = [{label, value, sub?}] -->
+  <section class="block">
+    <h2>Season snapshot</h2>
+    <div class="snapshot">
+      <div class="stat"><div class="sval">{{value}}</div><div class="slabel">{{label}}</div><div class="ssub">{{sub}}</div></div>
+    </div>
+  </section>
 
   <!-- RANKINGS: one chip per ranking, EACH with its own "as of" date. Never merge OWGR / OoM / WAGR. -->
   <section class="block">
@@ -41,11 +59,11 @@
     <p class="note">Each ranking is dated independently — different populations, never combined.</p>
   </section>
 
-  <!-- BIO: DOB/age, turned pro, college, hometown, plays -->
+  <!-- BIO: born/age (label is "Age" when only age is known, "Born" when a DOB/year is), turned pro, college, hometown, plays -->
   <section class="block">
     <h2>Bio</h2>
     <dl class="bio">
-      <div class="bio-row"><dt>Born</dt><dd>{{birth_date}} (age {{age}})</dd></div>
+      <div class="bio-row"><dt>Born</dt><dd>{{birth_date}} · age {{age}}</dd></div>   <!-- OR <dt>Age</dt><dd>{{age}}</dd> when no DOB -->
       <div class="bio-row"><dt>Turned pro</dt><dd>{{turned_pro_year}}</dd></div>
       <div class="bio-row"><dt>College</dt><dd>{{college}}</dd></div>
       <div class="bio-row"><dt>Hometown</dt><dd>{{hometown}}</dd></div>
@@ -53,21 +71,31 @@
     </dl>
   </section>
 
-  <!-- CAREER: pro-win count + notable wins (year — title (tour, note)) -->
+  <!-- CAREER: pro-win count pill + notable wins. A win with signature:true gets the highlighted row. -->
   <section class="block">
     <h2>Career</h2>
-    <p class="winsline"><strong>{{pro_wins_count}}</strong> career professional wins.</p>
+    <div class="winspill"><span class="wp-icon">🏆</span><span class="wp-n">{{pro_wins_count}}</span> professional wins</div>
     <ul class="wins">
-      <li><span class="yr">{{year}}</span><span class="wtitle">{{title}}</span> <span class="wtail">({{tour}}, {{note}})</span></li>
+      <li class="win win--sig">        <!-- .win--sig only when signature:true -->
+        <span class="yr">{{year}}</span>
+        <div class="wbody">
+          <div class="wtop"><span class="wtitle">{{title}}</span><span class="wtour">{{tour}}</span><span class="sig-star">★</span></div>
+          <div class="wnote">{{note}}</div>
+        </div>
+      </li>
     </ul>
   </section>
 
-  <!-- RECENT FORM: this-season summary + a highlighted "this event" callout -->
+  <!-- RECENT FORM: best-finish results (optional) + this-season prose + a highlighted "this event" callout -->
   <section class="block">
     <h2>Recent form</h2>
+    <ul class="results">   <!-- notable_results = [{finish, title, tour, year}]; top-3 finishes get .fin--podium -->
+      <li class="result"><span class="fin fin--podium">{{finish}}</span><span class="rtitle">{{title}}</span><span class="rmeta">{{tour}} · {{year}}</span></li>
+    </ul>
     <p class="form">{{recent_form}}</p>
     <div class="event">
       <div class="event-name">{{this_event.name}}</div>
+      <div class="event-result">{{this_event.result}}</div>   <!-- optional highlighted line -->
       <div class="event-sum">{{this_event.summary}}</div>
     </div>
   </section>
